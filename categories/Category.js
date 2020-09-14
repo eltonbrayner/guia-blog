@@ -13,6 +13,6 @@ const Category = database.connection.define("categories", {
 });
 
 //Sync models com as tabelas do banco de dados
-Category.sync({ force: true }); //Rodar comando apenas 1x
+// Category.sync({ force: true }); //Rodar comando apenas 1x
 
 module.exports = Category;
