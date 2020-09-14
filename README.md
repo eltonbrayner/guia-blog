@@ -1,4 +1,4 @@
-# Perguntas e Respostas
+# Guia Blog
 Projeto NodejS + EJS + MySQL
 
 ## Pré-requisitos
