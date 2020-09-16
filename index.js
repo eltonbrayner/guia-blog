@@ -3,6 +3,10 @@ const app = express();
 const bodyParser = require("body-parser");
 const env = require("./.env");
 
+//Configurando BodyParser para receber informações do formulario
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 //Rotas
 const categoriesController = require("./categories/CategoriesController");
 const articlesController = require("./articles/ArticlesController");
@@ -33,10 +37,6 @@ app.use(express.static("public"));
 //Utilizando as rotas com prefixo
 app.use("/", categoriesController);
 app.use("/", articlesController);
-
-//Configurando BodyParser para receber informações do formulario
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 app.listen(env.PORT, () => {
   return console.log("Server runing on port " + env.PORT);
