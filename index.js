@@ -13,12 +13,12 @@ const articlesController = require("./articles/ArticlesController");
 
 // - - Banco de Dados START
 //Banco de Dados
-const database = require("./database/database");
-const Category = require("./categories/Category");
-const Article = require("./articles/Article");
+const connection = require("./database/database.js");
+const Category = require("./categories/Category.js");
+const Article = require("./articles/Article.js");
 
 //Conexão com o DB através do sequelize
-database.connection
+connection
   .authenticate()
   .then(() => {
     console.log("Database connection made successfully.");
@@ -37,6 +37,10 @@ app.use(express.static("public"));
 //Utilizando as rotas com prefixo
 app.use("/", categoriesController);
 app.use("/", articlesController);
+
+app.get("/", (req, res) => {
+  res.redirect("/admin/categories");
+});
 
 app.listen(env.PORT, () => {
   return console.log("Server runing on port " + env.PORT);

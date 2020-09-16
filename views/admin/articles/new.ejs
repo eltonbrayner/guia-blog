@@ -1,0 +1,53 @@
+<!-- Importando partials com EJS -->
+<%- include('../../partials/header.ejs') %>
+<body>
+  <%- include('../../partials/navbar.ejs') %>
+  <div class="container">
+    <hr />
+    <div class="card">
+      <div class="card-header">
+        <h2>Cadastro de Artigo</h2>
+      </div>
+      <div class="card-body">
+        <form method="POST" action="/articles/save" onsubmit="btnSubmit()">
+          <input
+            class="form-control"
+            type="text"
+            name="title"
+            placeholder="Defina o titulo do artigo"
+            required
+          />
+          <br />
+          <textarea
+            name="body"
+            placeholder="Escreva o artigo aqui"
+            id="article"
+            cols="30"
+            rows="10"
+            class="form-control"
+          ></textarea>
+          <br />
+          <select name="category" class="form-control">
+            <% categories.forEach(element => { %>
+            <option value="<%= element.id %>"><%= element.title %></option>
+            <% }) %>
+          </select>
+          <br />
+          <a href="/admin/categories" class="btn btn-primary">Voltar</a>
+          <button class="btn btn-success">Cadastrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+<%- include('../../partials/footer.ejs') %>
+<script src="/tinymce/tinymce.min.js"></script>
+<script>
+  tinymce.init({
+    language: "pt_BR",
+    selector: "#article",
+    plugins: [
+      "advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons",
+    ],
+  });
+</script>

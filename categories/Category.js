@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
-const database = require("../database/database");
+const connection = require("../database/database");
 
-const Category = database.connection.define("categories", {
+const Category = connection.define("categories", {
   title: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -13,6 +13,6 @@ const Category = database.connection.define("categories", {
 });
 
 //Sync models com as tabelas do banco de dados
-// Category.sync({ force: true }); //Rodar comando apenas 1x
+Category.sync({ force: true }); //Rodar comando apenas 1x
 
 module.exports = Category;
