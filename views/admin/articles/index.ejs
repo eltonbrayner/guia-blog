@@ -1,0 +1,59 @@
+<!-- Importando partials com EJS -->
+<%- include('../../partials/header.ejs') %>
+<body>
+  <%- include('../../partials/navbar.ejs') %>
+  <div class="container">
+    <hr />
+    <h2>Artigos</h2>
+    <hr />
+    <a href="/admin/articles/new" class="btn btn-success">Cadastrar</a>
+    <hr />
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titulo</th>
+          <th>Slug</th>
+          <th>Categoria</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% article.forEach(element => { %>
+        <tr>
+          <th><%= element.id %></th>
+          <th><%= element.title %></th>
+          <th><%= element.slug %></th>
+          <th><%= element.category.title %></th>
+          <th>
+            <a
+              href="/admin/articles/edit/<%= element.id %>"
+              class="btn btn-warning"
+              >Editar</a
+            >
+
+            <form
+              method="POST"
+              action="/articles/delete"
+              style="display: inline"
+              onsubmit="confirmarDelecao(event, this)"
+            >
+              <input type="hidden" name="id" value="<%= element.id %>" />
+              <button class="btn btn-danger">Deletar</button>
+            </form>
+          </th>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+<script>
+  //Confirmação antes de deletar a categoria
+  function confirmarDelecao(event, form) {
+    event.preventDefault();
+    let decision = confirm("Deseja deletar este artigo?");
+    decision ? form.submit() : null;
+  }
+</script>
+<%- include('../../partials/footer.ejs') %>

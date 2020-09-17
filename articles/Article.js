@@ -3,6 +3,12 @@ const connection = require("../database/database");
 const Category = require("../categories/Category");
 
 const Article = connection.define("articles", {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER,
+  },
   title: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -15,10 +21,19 @@ const Article = connection.define("articles", {
     type: Sequelize.TEXT,
     allowNull: false,
   },
+  categoryId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      // User belongsTo category 1:1
+      model: Category,
+      key: "id",
+    },
+  },
 });
 
 //Sync models com as tabelas do banco de dados
-Article.sync({ force: true }); //Rodar comando apenas 1x
+// Article.sync({ force: true }); //Rodar comando apenas 1x
 
 // Tem muitos -> Uma categoria tem muitos artigos
 Category.hasMany(Article);

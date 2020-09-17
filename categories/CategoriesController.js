@@ -10,7 +10,6 @@ router.get("/admin/categories/new", (req, res) => {
 router.post("/categories/save", (req, res) => {
   const title = req.body.title;
   if (title != undefined && title.length > 0) {
-    console.log(title.length);
     return Category.create({
       title: title,
       slug: slugify(title),
@@ -31,17 +30,17 @@ router.get("/admin/categories", (req, res) => {
   );
 });
 
-router.post("/categories/delete", async (req, res) => {
+router.post("/categories/delete", (req, res) => {
   const id = req.body.id;
   //Diferente de undefined e não for um numero
   if (id != undefined && !isNaN(id)) {
     //Destroy deleta uma categoria
-    await Category.destroy({
+    return Category.destroy({
       where: {
         id: id,
       },
     }).then(() => {
-      res.redirect("/admin/categories");
+      return res.redirect("/admin/categories");
     });
   }
   return res.redirect("/admin/categories");
@@ -54,14 +53,14 @@ router.get("/admin/categories/edit/:id", (req, res) => {
   Category.findByPk(id)
     .then((categorie) => {
       if (categorie != undefined) {
-        res.render("admin/categories/edit", {
+        return res.render("admin/categories/edit", {
           categorie: categorie,
         });
       }
       return res.redirect("/admin/categories/");
     })
     .catch((error) => {
-      res.redirect("/admin/categories");
+      return res.redirect("/admin/categories/");
     });
 });
 

@@ -6,18 +6,18 @@
     <hr />
     <div class="card">
       <div class="card-header">
-        <h2>Cadastro de Artigo</h2>
+        <h2>Edição de Artigo</h2>
       </div>
       <div class="card-body">
-        <form method="POST" action="/articles/save" onsubmit="btnSubmit()">
+        <form method="POST" action="/articles/update" onsubmit="btnSubmit()">
           <input
             class="form-control"
             type="text"
             name="title"
-            placeholder="Defina o titulo do artigo"
+            placeholder="Defina o titulo da categoria"
+            value="<%= article.title %>"
             required
           />
-          <br />
           <textarea
             name="body"
             placeholder="Escreva o artigo aqui"
@@ -25,16 +25,15 @@
             cols="30"
             rows="10"
             class="form-control"
-          ></textarea>
+          >
+<%= article.body %></textarea
+          >
           <br />
-          <select name="category" class="form-control">
-            <% categories.forEach(element => { %>
-            <option value="<%= element.id %>"><%= element.title %></option>
-            <% }) %>
-          </select>
+
+          <input type="hidden" name="id" value="<%= article.id %> " />
           <br />
           <a href="/admin/articles" class="btn btn-primary">Voltar</a>
-          <button class="btn btn-success">Cadastrar</button>
+          <button class="btn btn-success">Atualizar</button>
         </form>
       </div>
     </div>
