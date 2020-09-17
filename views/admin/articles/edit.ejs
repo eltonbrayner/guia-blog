@@ -29,7 +29,11 @@
 <%= article.body %></textarea
           >
           <br />
-
+          <select disabled name="category" class="form-control">
+            <option value="<%= article.category.id %>">
+              <%= article.category.title %>
+            </option>
+          </select>
           <input type="hidden" name="id" value="<%= article.id %> " />
           <br />
           <a href="/admin/articles" class="btn btn-primary">Voltar</a>

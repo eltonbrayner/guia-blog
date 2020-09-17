@@ -59,7 +59,13 @@ router.get("/admin/articles/edit/:id", (req, res) => {
   //Pesquisa feita pelo Primary Key (ID)
   const id = req.params.id;
   if (isNaN(id)) res.redirect("/admin/articles/");
-  Article.findByPk(id)
+  Article.findByPk(id, {
+    include: [
+      {
+        model: Category,
+      },
+    ],
+  })
     .then((article) => {
       if (article != undefined) {
         return res.render("admin/articles/edit", {
