@@ -39,7 +39,62 @@ app.use("/", categoriesController);
 app.use("/", articlesController);
 
 app.get("/", (req, res) => {
-  res.redirect("/admin/categories");
+  Article.findAll({
+    order: [["id", "DESC"]],
+  }).then((articles) => {
+    Category.findAll().then((categories) => {
+      res.render("index", {
+        articles: articles,
+        categories: categories,
+      });
+    });
+  });
+});
+
+app.get("/:slug", (req, res) => {
+  const slug = req.params.slug;
+  return Article.findOne({
+    where: {
+      slug: slug,
+    },
+  })
+    .then((article) => {
+      if (article != undefined) {
+        return Category.findAll().then((categories) => {
+          return res.render("article", {
+            article: article,
+            categories: categories,
+          });
+        });
+      }
+      return res.redirect("/");
+    })
+    .catch((err) => {
+      res.redirect("/");
+    });
+});
+
+app.get("/category/:slug", (req, res) => {
+  const slug = req.params.slug;
+  Category.findOne({
+    where: {
+      slug: slug,
+    }, //Join realizando a busca dos artigos pela categoria encontrada
+    // Inclusão na busca dos artigos pertencentes a Categoria
+    include: [{ model: Article }],
+  })
+    .then((category) => {
+      if (category != undefined) {
+        Category.findAll().then((categories) => {
+          res.render("index", {
+            articles: category.articles,
+            categories: categories,
+          });
+        });
+      }
+      return res.redirect("/");
+    })
+    .catch((err) => res.redirect("/"));
 });
 
 app.listen(env.PORT, () => {
