@@ -70,13 +70,13 @@ app.get("/:slug", (req, res) => {
       return res.redirect("/");
     })
     .catch((err) => {
-      res.redirect("/");
+      return res.redirect("/");
     });
 });
 
 app.get("/category/:slug", (req, res) => {
   const slug = req.params.slug;
-  Category.findOne({
+  return Category.findOne({
     where: {
       slug: slug,
     }, //Join realizando a busca dos artigos pela categoria encontrada
@@ -85,7 +85,7 @@ app.get("/category/:slug", (req, res) => {
   })
     .then((category) => {
       if (category != undefined) {
-        Category.findAll().then((categories) => {
+        return Category.findAll().then((categories) => {
           res.render("index", {
             articles: category.articles,
             categories: categories,

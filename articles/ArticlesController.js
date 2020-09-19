@@ -85,6 +85,7 @@ router.post("/articles/update", (req, res) => {
     {
       title: title,
       body: body,
+      slug: slugfy(title),
     },
     {
       where: {
@@ -93,6 +94,35 @@ router.post("/articles/update", (req, res) => {
     }
   ).then(() => {
     res.redirect("/admin/articles");
+  });
+});
+
+router.get("/articles/page/:num", (req, res) => {
+  const page = req.params.num;
+  var offset = 0;
+  const limit = 4;
+
+  if (isNaN(page) || page == 1) {
+    offset = 0;
+  } else {
+    offset = parseInt(page) * limit;
+  }
+
+  Article.findAndCountAll({
+    limit: limit,
+    offset: offset,
+  }).then((articles) => {
+    var next;
+    if (offset + limit >= articles.count) {
+      next = false;
+    } else {
+      next = true;
+    }
+    var result = {
+      next: next,
+      articles: articles,
+    };
+    res.json(result);
   });
 });
 
