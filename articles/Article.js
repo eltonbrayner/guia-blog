@@ -34,6 +34,7 @@ const Article = connection.define("articles", {
 
 //Sync models com as tabelas do banco de dados
 // Article.sync({ force: true }); //Rodar comando apenas 1x
+Article.sync(); //Rodar comando apenas 1x
 
 // Tem muitos -> Uma categoria tem muitos artigos
 Category.hasMany(Article);

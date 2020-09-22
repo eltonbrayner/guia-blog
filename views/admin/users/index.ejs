@@ -1,0 +1,51 @@
+<!-- Importando partials com EJS -->
+<%- include('../../partials/header.ejs') %>
+<body>
+  <%- include('../../partials/navbar.ejs') %>
+  <div class="container">
+    <hr />
+    <h2>Usuários</h2>
+    <hr />
+    <a href="/admin/users/create" class="btn btn-success"
+      >Cadastrar novo usuário</a
+    >
+    <hr />
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Login</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(element => { %>
+        <tr>
+          <th><%= element.id %></th>
+          <th><%= element.login %></th>
+          <th>
+            <form
+              method="POST"
+              action="/users/delete"
+              style="display: inline"
+              onsubmit="confirmarDelecao(event, this)"
+            >
+              <input type="hidden" name="id" value="<%= element.id %>" />
+              <button class="btn btn-danger">Deletar</button>
+            </form>
+          </th>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+<script>
+  //Confirmação antes de deletar a categoria
+  function confirmarDelecao(event, form) {
+    event.preventDefault();
+    let decision = confirm("Deseja deletar este artigo?");
+    decision ? form.submit() : null;
+  }
+</script>
+<%- include('../../partials/footer.ejs') %>

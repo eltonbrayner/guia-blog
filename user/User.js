@@ -1,25 +1,27 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 
-const Category = connection.define("categories", {
+const User = connection.define("users", {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER,
   },
-  title: {
+  login: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  slug: {
+  password: {
     type: Sequelize.STRING,
     allowNull: false,
+  },
+  admin: {
+    type: Sequelize.STRING,
   },
 });
 
 //Sync models com as tabelas do banco de dados
-// Category.sync({ force: true }); //Rodar comando apenas 1x
-Category.sync();
+User.sync();
 
-module.exports = Category;
+module.exports = User;

@@ -1,0 +1,41 @@
+<!-- Importando partials com EJS -->
+<%- include('../../partials/header.ejs') %> <%-
+include('../../partials/navbar.ejs') %>
+
+<div class="container">
+  <hr />
+  <div class="card mt-5">
+    <div class="card-header">
+      <h2>Criação de Usuário</h2>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/users/create">
+        <input
+          type="text"
+          placeholder="Login"
+          name="login"
+          class="form-control"
+        />
+        <br />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+          class="form-control mb-3"
+        />
+        <h5 class="inline-block d-inline">Admin:</h5>
+        <input
+          class="mb-2"
+          type="checkbox"
+          name="admin"
+          style="width: 1.3em; height: 1.3em; vertical-align: middle"
+        />
+        <button class="btn btn-success mt-2 btn-block" type="submit">
+          Criar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/footer.ejs') %>
